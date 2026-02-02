@@ -17,10 +17,8 @@ export const plugin: Plugin = function() {
   return (tree) => {
     visit(tree, (node) => {
       const n = node as unknown as GrowiNode;
-      if (n.name !== 'today') return;
-
       console.log(n);
-
     });
   };
 };
+
