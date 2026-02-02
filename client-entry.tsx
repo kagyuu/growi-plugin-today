@@ -17,31 +17,20 @@ const activate = (): void => {
   if (growiFacade == null || growiFacade.markdownRenderer == null) {
     return;
   }
+
   const { optionsGenerators } = growiFacade.markdownRenderer;
-  const originalCustomViewOptions = optionsGenerators.customGenerateViewOptions;
+
+  // For page view
   optionsGenerators.customGenerateViewOptions = (...args) => {
-    const options = originalCustomViewOptions ? originalCustomViewOptions(...args) : optionsGenerators.generateViewOptions(...args);
-    options.remarkPlugins.push(plugin as any);
+    const options = optionsGenerators.generateViewOptions(...args);
+    options.remarkPlugins.push(plugin as any);  // プラグイン追加（表示用）
     return options;
   };
 
   // For preview
-  const originalGeneratePreviewOptions = optionsGenerators.customGeneratePreviewOptions;
   optionsGenerators.customGeneratePreviewOptions = (...args) => {
-    const preview = originalGeneratePreviewOptions ? originalGeneratePreviewOptions(...args) : optionsGenerators.generatePreviewOptions(...args);
-    preview.remarkPlugins.push(plugin as any);
-    return preview;
+    const options = optionsGenerators.generatePreviewOptions(...args);
+    options.remarkPlugins.push(plugin as any);  // プラグイン追加（プレビュー用）
+    return options;
   };
-};
-
-const deactivate = (): void => {
-};
-
-// register activate
-if ((window as any).pluginActivators == null) {
-  (window as any).pluginActivators = {};
-}
-(window as any).pluginActivators[config.name] = {
-  activate,
-  deactivate,
 };

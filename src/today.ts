@@ -1,5 +1,3 @@
-import { getPackedSettings } from 'http2';
-
 import type { Plugin } from 'unified';
 import { visit } from 'unist-util-visit';
 
@@ -9,23 +7,20 @@ interface GrowiNode extends Node {
   attributes: {[key: string]: string}
   children: GrowiNode[];
   value: string;
+  position: {
+    start: { line: number; column: number; offset: number; };
+    end: { line: number; column: number; offset: number; };
+  }
 }
 
 export const plugin: Plugin = function() {
-
   return (tree) => {
     visit(tree, (node) => {
       const n = node as unknown as GrowiNode;
-      try {
-        if (n.type === 'leafGrowiPluginDirective' && n.name === 'today') {
-          n.type = 'html';
-          n.value = `<div style="color: red;">TODAY IS TODAY</div>`;
-          console.log(n);
-        }
-      }catch (e) {
-        n.type = 'html';
-        n.value = `<div style="color: red;">Error: ${(e as Error).message}</div>`;
-      }
+      if (n.name !== 'today') return;
+
+      console.log(n);
+
     });
   };
 };
