@@ -23,8 +23,39 @@ export const plugin: Plugin = function() {
       console.log(n);
 
       n.type = 'html';
-      n.value = '<fieldset><legend>2026-02-03</legend><meter value="33.54775462963" min="0" max="365" title="9.1% (33.5/365)" style="width:75px">9.1% (33.5/365)</meter></fieldset>';      
+      n.value = createTodayNode();
     });
   };
 };
 
+const createTodayNode = function() {
+  const now = new Date();
+
+  const year = now.getFullYear();
+  const month = now.getMonth() + 1;
+  const date = now.getDate();
+  const day = now.getDay();
+
+  var html = new Array<string>();
+  html.push('<fieldset>');
+  html.push('<legend>' + now.toISOString().slice(0, 10) + '</legend>');
+  html.push(year.toString());
+  html.push(progress(new Date(year, 0, 1), new Date(year + 1, 0, 1), now));
+  html.push(now.toLocaleDateString('en', {month: 'long'}));
+  html.push(progress(new Date(year, month, 1), new Date(year, month+1, 1), now));
+  html.push(now.toLocaleDateString('en', {weekday: 'long'}));
+  html.push(progress(new Date(year, month, date), new Date(year, month, date + 1), now));
+  html.push('/fieldset>');
+
+  return html.join('\n');
+}
+
+const msecInDay = 24 * 60 * 60 * 1000;
+
+const progress = function(start: Date, end: Date, now: Date): string {
+  const total = (end.getTime() - start.getTime()) / msecInDay;
+  const current = (now.getTime() - start.getTime()) / msecInDay;
+  const percent = Math.floor((current / total) * 100);
+
+  return `<meter value="${current}" min="0" max="${total}" title="${percent}% (${current}/${total})" style="width:75px">${percent}% (${current}/${total})</meter>`;
+}
