@@ -15,11 +15,10 @@ export const plugin: Plugin = function() {
       const n = node as unknown as GrowiNode;
 
       if (n.name !== 'today') return;
-      
-      console.log(n);
 
       n.type = 'html';
       n.value = createTodayNode();
+      console.log(n);
     });
   };
 };
@@ -42,8 +41,6 @@ const createTodayNode = function() {
   html.push(now.toLocaleDateString('en', {weekday: 'long'}));
   html.push(progress(new Date(year, month, date), new Date(year, month, date + 1), now));
   html.push('/fieldset>');
-
-  console.log(html.join(''));
 
   return html.join();
 }
