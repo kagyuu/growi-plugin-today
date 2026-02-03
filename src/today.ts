@@ -36,7 +36,7 @@ const createTodayNode = function() {
   const date = now.getDate();
   const day = now.getDay();
 
-  var html = new Array<string>();
+  var html = [];
   html.push('<fieldset>');
   html.push('<legend>' + now.toISOString().slice(0, 10) + '</legend>');
   html.push(year.toString());
@@ -46,6 +46,8 @@ const createTodayNode = function() {
   html.push(now.toLocaleDateString('en', {weekday: 'long'}));
   html.push(progress(new Date(year, month, date), new Date(year, month, date + 1), now));
   html.push('/fieldset>');
+
+  console.log(html.join(''));
 
   return html.join('');
 }
