@@ -17,7 +17,8 @@ export const plugin: Plugin = function() {
       if (n.name !== 'today') return;
 
       n.type = 'html';
-      n.value = createTodayNode();
+      n.value = '<div id="calendar">AAA</div>'
+      //n.value = createTodayNode();
       console.log(n);
     });
   };
