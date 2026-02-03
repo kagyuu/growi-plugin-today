@@ -1,6 +1,6 @@
-# GROIW Calendar Plugin
+# GROIW Today Plugin
 
-This is a calendar plugin for GROWI. It shows a calendar view.
+This is a today plugin for GROWI. It shows how many days we spent in this {year|month|week|day}.
 
 ## Install
 
@@ -9,33 +9,15 @@ Install a plugin in admin panel.
 ## Usage
 
 ```
-$calendar
+$today
 ```
 
-When you click each day, the plugin jumps to the page of the day. `YYYY/MM/DD` is default page name.
+Show progress bars that represents how many days we spent in this {year|month|week|day}.f
+If you make a mouse cursor over the bars, you can get digital percentages.
 
 ## Options
 
-If you want to chage calendar year and month, you can use options.
-
-```
-$calendar(10,2020)
-```
-
-You can change a locale like 'ja', 'fr'. Default is 'en'.
-
-```
-$calendar(locale=ja)
-$calendar(10,2020,locale=ja)
-```
-
-If you want to change a new page name, you can use 'separator' option. Default is '/'. 
-
-```
-$calendar(10,2020,locale=ja,separator=-)
-$calendar(local=fr,separator=-)
-$calendar(separator=-)
-```
+There is no options, now.
 
 ## License
 
