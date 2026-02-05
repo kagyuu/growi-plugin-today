@@ -18,6 +18,7 @@ export const plugin: Plugin = function() {
 
       if (n.name !== 'amazon') return;
 
+      console.log('amazon plugin:', n);
       const asin = n.attributes['asin'];
       const title = n.attributes['title'];
       const url = n.attributes['url'];
