@@ -6,6 +6,8 @@
 
 .today-fieldset legend {
   font-weight: bold;
+  white-space: nowrap;
+  overflow: visible;
 }
 
 .today-fieldset meter {
