@@ -2,16 +2,7 @@ import config from './package.json';
 import { todayPlugin } from './src/today';
 import { Options, Func, ViewOptions } from './types/utils';
 
-declare const growiFacade : {
-  markdownRenderer?: {
-    optionsGenerators: {
-      customGenerateViewOptions: (path: string, options: Options, toc: Func) => ViewOptions,
-      generateViewOptions: (path: string, options: Options, toc: Func) => ViewOptions,
-      generatePreviewOptions: (path: string, options: Options, toc: Func) => ViewOptions,
-      customGeneratePreviewOptions: (path: string, options: Options, toc: Func) => ViewOptions,
-    },
-  },
-};
+declare const growiFacade : any;
 
 const activate = (): void => {
   console.log(`Activating ${config.name} v${config.version}...`);
@@ -22,17 +13,24 @@ const activate = (): void => {
 
   const { optionsGenerators } = growiFacade.markdownRenderer;
 
+  const originalCustomViewOptions = optionsGenerators.customGenerateViewOptions;
+  const originalCustomPreviewOptions = optionsGenerators.customGeneratePreviewOptions;
+
   // For page view
-  optionsGenerators.customGenerateViewOptions = (...args) => {
-    const options = optionsGenerators.generateViewOptions(...args);
+  optionsGenerators.customGenerateViewOptions = (...args: any[]) => {
+    const options = originalCustomViewOptions ? originalCustomViewOptions(...args) : optionsGenerators.generateViewOptions(...args);
     options.remarkPlugins.push(todayPlugin as any);  // プラグイン追加（表示用）
+
+    console.log('todayPlugin added to view options:', options.remarkPlugins);
     return options;
   };
 
   // For preview
-  optionsGenerators.customGeneratePreviewOptions = (...args) => {
-    const options = optionsGenerators.generatePreviewOptions(...args);
+  optionsGenerators.customGeneratePreviewOptions = (...args: any[]) => {
+    const options = originalCustomPreviewOptions ? originalCustomPreviewOptions(...args) : optionsGenerators.generatePreviewOptions(...args);
     options.remarkPlugins.push(todayPlugin as any);  // プラグイン追加（プレビュー用）
+
+    // console.log('todayPlugin added to preview options:', options.remarkPlugins);
     return options;
   };
 
