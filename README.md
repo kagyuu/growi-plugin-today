@@ -18,7 +18,7 @@ If you make a mouse cursor over the bars, you can get digital percentages.
 ## Options
 
 ```
-&today(date=2032-12-20)
+$today(date=2032-12-20)
 ```
 
 You can specify the date.
