@@ -5,7 +5,7 @@ import { Options, Func, ViewOptions } from './types/utils';
 declare const growiFacade : any;
 
 const activate = (): void => {
-  console.log(`Activating ${config.name} v${config.version}...`);
+  // console.log(`Activating ${config.name} v${config.version}...`);
 
   if (growiFacade == null || growiFacade.markdownRenderer == null) {
     return;
@@ -21,7 +21,7 @@ const activate = (): void => {
     const options = originalCustomViewOptions ? originalCustomViewOptions(...args) : optionsGenerators.generateViewOptions(...args);
     options.remarkPlugins.push(plugin as any);  // プラグイン追加（表示用）
 
-    console.log(`${config.name} added to view options:`, options.remarkPlugins);
+    // console.log(`${config.name} added to view options:`, options.remarkPlugins);
     return options;
   };
 
@@ -34,7 +34,7 @@ const activate = (): void => {
     return options;
   };
 
-  console.log(`${config.name} activated.`);
+  // console.log(`${config.name} activated.`);
 };
 
 const deactivate = (): void => {
@@ -49,4 +49,4 @@ if ((window as any).pluginActivators == null) {
   deactivate,
 };
 
-console.log(`${config.name} v${config.version} is loaded.`);
+// console.log(`${config.name} v${config.version} is loaded.`);
